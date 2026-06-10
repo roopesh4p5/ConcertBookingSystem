@@ -4,7 +4,6 @@ import { User } from '../models/user.model';
 
 export const getUsers =async (req: Request, res: Response) => {
     try{
-        //add message user fetched in the response
         const users =await User.findAll();
         res.json({ message: 'Users fetched successfully', data: users });
         console.log('Users fetched successfully:', users);
@@ -23,5 +22,16 @@ export const createUser = async (req: Request, res: Response) => {
     }catch(error){
         console.error('Error creating user:', error);
         res.status(500).json({ error: 'Failed to create user' });
+    }
+};
+
+// Bulk upload users from an xls file
+export const bulkuploadUsers = async (req: Request, res: Response) => {
+    try{
+        // Logic to handle bulk upload from xls file
+        res.status(200).json({ message: 'Bulk upload successful' });
+    }catch(error){
+        console.error('Error in bulk upload:', error);
+        res.status(500).json({ error: 'Failed to bulk upload users' });
     }
 };

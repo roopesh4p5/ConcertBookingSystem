@@ -1,6 +1,8 @@
 import express, {Request, Response} from 'express';
 import dotenv from 'dotenv';
-import userRoutes from './routes/userRoutes';
+import userRoutes from './routes/user.routes';
+import SeatsRoutes from './routes/seats.routes';
+import BookingRoutes from './routes/booking.routes';
 import { sequelize } from './config/dbconfig';
 
 dotenv.config();
@@ -18,7 +20,8 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/api', userRoutes);
-
+app.use('/api', SeatsRoutes);
+app.use('/api', BookingRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
