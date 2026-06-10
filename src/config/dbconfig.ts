@@ -1,8 +1,7 @@
 import { Sequelize } from "sequelize";
-import * as config from "./config";
+import config from "./sequelize-config";
 
-const env = (process.env.NODE_ENV || "development") as keyof typeof config;
-const dbConfig = config[env];
+const dbConfig = config.development;
 
 export const sequelize = new Sequelize(
   dbConfig.database!,
