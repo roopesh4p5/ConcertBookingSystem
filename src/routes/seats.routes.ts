@@ -9,6 +9,8 @@ const router = Router();
  * @swagger
  * /api/seats:
  *   post:
+ *     tags:
+ *       - Seats
  *     summary: Create a new seat
  *     requestBody:
  *       required: true
@@ -38,6 +40,8 @@ router.post('/seats', createSeats);
  * @swagger
  * /api/seats:
  *   get:
+ *     tags:
+ *       - Seats
  *     summary: Get all seats
  *     responses:
  *       200:

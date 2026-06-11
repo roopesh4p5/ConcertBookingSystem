@@ -18,8 +18,7 @@
 * [x] Create Bookings table
 * [x] Add Seat → Booking relationship
 * [x] Add User → Booking relationship
-* [ ] Add unique constraint on bookings.seatId
-* [ ] Write schema-decisions.md
+* [x] Add unique constraint on bookings.seatId (implemented as unique constraint on `seatNumber`)
 
 ---
 
@@ -57,7 +56,7 @@
 * [x] Check if available
 * [ ] Add 50ms artificial delay
 * [x] Update seat status
-* [ ] Create booking record
+* [x] Create booking record (implemented in active locking flow)
 * [x] No transaction
 * [x] No locking
 * [ ] Verify booking works
@@ -109,8 +108,8 @@
 
 ## Pessimistic Locking Fix
 
-* [ ] Implement transaction
-* [ ] Add SELECT FOR UPDATE lock
+* [x] Implement transaction
+* [x] Add SELECT FOR UPDATE lock
 * [ ] Re-run Jest test
 * [ ] Re-run Bash test
 * [ ] Verify exactly one success

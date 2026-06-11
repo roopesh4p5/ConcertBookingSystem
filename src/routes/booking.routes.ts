@@ -11,6 +11,8 @@ const router = Router();
  * @swagger
  * /api/bookings:
  *   post:
+ *     tags:
+ *       - Bookings
  *     summary: Create a new booking
  *     requestBody:
  *       required: true
@@ -42,6 +44,8 @@ router.post('/bookings', createBooking);
  * @swagger
  * /api/bookings:
  *   get:
+ *     tags:
+ *       - Bookings
  *     summary: Get all bookings
  *     responses:
  *       200:
