@@ -18,7 +18,8 @@ booking.init(
         },
         seatNumber: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         UserId: {
             type: DataTypes.INTEGER,
