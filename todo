@@ -1,0 +1,152 @@
+# PROJECT_TODO.md
+
+## Project Setup
+
+* [x] Initialize Node.js + TypeScript project
+* [x] Setup Express server
+* [x] Setup PostgreSQL
+* [x] Setup Sequelize ORM
+* [x] Configure database connection
+* [x] Create project folder structure
+
+---
+
+## Database Design
+
+* [x] Create Users table
+* [x] Create Seats table
+* [x] Create Bookings table
+* [x] Add Seat → Booking relationship
+* [x] Add User → Booking relationship
+* [ ] Add unique constraint on bookings.seatId
+* [ ] Write schema-decisions.md
+
+---
+
+## Seat Generation
+
+* [x] Create POST /seats/generate
+* [x] Generate seat labels (A01, A02...)
+* [x] Support dynamic rows × columns
+* [ ] Handle duplicate seat generation
+* [ ] Test seat generation
+
+---
+
+## User Management
+
+* [x] Create POST /users/bulk
+* [ ] Create N users in one request
+* [ ] Test bulk user creation
+
+---
+
+## Seat Listing
+
+* [x] Create GET /seats
+* [x] Return seat status
+* [ ] Add available=true filter
+* [ ] Test seat listing
+
+---
+
+## Naive Booking Implementation
+
+* [x] Create POST /bookings
+* [x] Read seat status
+* [x] Check if available
+* [ ] Add 50ms artificial delay
+* [x] Update seat status
+* [ ] Create booking record
+* [x] No transaction
+* [x] No locking
+* [ ] Verify booking works
+
+---
+
+## Reproduce Race Condition
+
+* [ ] Generate 100 users
+* [ ] Select one target seat
+* [ ] Fire 100 concurrent booking requests
+* [ ] Confirm multiple 201 responses
+* [ ] Confirm double booking occurs
+
+---
+
+## Jest Concurrency Test
+
+* [ ] Setup Jest
+* [ ] Setup Supertest
+* [ ] Create concurrency.test.ts
+* [ ] Send 100 parallel requests
+* [ ] Count success responses
+* [ ] Verify naive implementation fails
+
+---
+
+## Bash Concurrency Test
+
+* [ ] Create test-concurrency.sh
+* [ ] Use curl requests
+* [ ] Use xargs -P for parallel execution
+* [ ] Count 201 responses
+* [ ] Count 409 responses
+* [ ] Verify naive implementation fails
+
+---
+
+## Optimistic Concurrency Fix
+
+* [ ] Implement conditional UPDATE
+* [ ] Check affected row count
+* [ ] Return 409 when seat already booked
+* [ ] Re-run Jest test
+* [ ] Re-run Bash test
+* [ ] Verify exactly one success
+
+---
+
+## Pessimistic Locking Fix
+
+* [ ] Implement transaction
+* [ ] Add SELECT FOR UPDATE lock
+* [ ] Re-run Jest test
+* [ ] Re-run Bash test
+* [ ] Verify exactly one success
+
+---
+
+## Redis Lock (Stretch Goal)
+
+* [ ] Setup Redis
+* [ ] Implement SET NX PX lock
+* [ ] Release lock safely
+* [ ] Re-run concurrency tests
+* [ ] Verify exactly one success
+
+---
+
+## Documentation
+
+* [ ] Write SOLUTION.md
+* [ ] Explain race condition
+* [ ] Explain optimistic concurrency
+* [ ] Explain pessimistic locking
+* [ ] Explain Redis use case
+* [ ] Add test results/screenshots
+
+---
+
+## Final Verification
+
+* [ ] Grid generation works
+* [ ] Bulk user creation works
+* [ ] Booking API works
+* [ ] Race condition reproduced
+* [ ] Jest test completed
+* [ ] Bash test completed
+* [ ] Optimistic fix completed
+* [ ] Pessimistic fix completed
+* [ ] SOLUTION.md completed
+* [ ] Project ready for submission

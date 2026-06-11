@@ -16,6 +16,7 @@ module.exports = {
       seatNumber: {
           type: Sequelize.STRING,
           allowNull: false,
+          unique: true,
           references: {
               model: 'seats',
               key: 'seatNumber'

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Seat } from '../models/seat.model';
 import { User } from '../models/user.model';
+import { booking } from '../models/booking.model';
 import { sequelize } from '../config/dbconfig';
 
 
@@ -87,6 +88,12 @@ export const createBooking = async (req: Request, res: Response) => {
         seat.isAvailable = false;
         await seat.save({ transaction });
 
+        await booking.create({
+            seatNumber: seatId,
+            UserId: userId,
+            bookingStatus: 'booked'
+        }, { transaction });
+
         await transaction.commit();
 
         res.status(201).json({
@@ -106,16 +113,12 @@ export const createBooking = async (req: Request, res: Response) => {
 
 export const getBookings = async (req: Request, res: Response) => {
     try {
-        const bookings = await Seat.findAll({
-            where: {
-                isAvailable: false
-            }
-        });
+        const bookings = await booking.findAll();
         res.status(200).json({
             message: 'Bookings fetched successfully',
             data: bookings
         });
-    }catch (error) {
+    } catch (error) {
         console.error('Error fetching bookings:', error);
         res.status(500).json({ error: 'Failed to fetch bookings' });
     }
