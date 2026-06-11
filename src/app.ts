@@ -4,6 +4,8 @@ import userRoutes from './routes/user.routes';
 import SeatsRoutes from './routes/seats.routes';
 import BookingRoutes from './routes/booking.routes';
 import { sequelize } from './config/dbconfig';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger.config';
 
 dotenv.config();
 const app = express();
@@ -18,6 +20,13 @@ sequelize.authenticate()
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, World!');
 });
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec)
+);
+
 
 app.use('/api', userRoutes);
 app.use('/api', SeatsRoutes);
