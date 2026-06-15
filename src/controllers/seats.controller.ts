@@ -43,18 +43,28 @@ export const createSeats = async (req: Request, res: Response) => {
 };
 
 export const getSeats = async (req: Request, res: Response) => {
-    try {
-        const seats = await Seat.findAll();
+  try {
+    const { available } = req.query;
 
-        res.status(200).json({
-            message: 'Seats fetched successfully',
-            data: seats
-        });
-    } catch (error) {
-        console.error('Error fetching seats:', error);
+    const whereClause: any = {};
 
-        res.status(500).json({
-            error: 'Failed to fetch seats'
-        });
+    if (available !== undefined) {
+      whereClause.isAvailable = available === 'true';
     }
+
+    const seats = await Seat.findAll({
+      where: whereClause,
+    });
+
+    res.status(200).json({
+      message: 'Seats fetched successfully',
+      data: seats,
+    });
+  } catch (error) {
+    console.error('Error fetching seats:', error);
+
+    res.status(500).json({
+      error: 'Failed to fetch seats',
+    });
+  }
 };

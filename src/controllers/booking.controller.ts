@@ -34,8 +34,17 @@ import { sequelize } from '../config/dbconfig';
 //         if (!seat.isAvailable) {
 //             return res.status(400).json({ error: 'Seat is already booked' });
 //         }
+
+
+//         await new Promise(resolve => setTimeout(resolve, 50));
 //         seat.isAvailable = false;
 //         await seat.save();
+//         await booking.create({
+//             seatNumber: seatId,
+//             UserId: userId,
+//             bookingStatus: 'booked'
+//         });
+
 
 //         res.status(201).json({
 //             message: 'Booking created successfully',
@@ -57,6 +66,7 @@ export const createBooking = async (req: Request, res: Response) => {
 
     const transaction = await sequelize.transaction();
     try {
+       
         const user = await User.findOne({
             where: {
                 uuid: userId
@@ -73,6 +83,7 @@ export const createBooking = async (req: Request, res: Response) => {
                 seatNumber: seatId
             },
             lock: transaction.LOCK.UPDATE,
+
             transaction
         });
 
@@ -85,6 +96,7 @@ export const createBooking = async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'Seat is already booked' });
         }
 
+      
         seat.isAvailable = false;
         await seat.save({ transaction });
 
@@ -95,6 +107,7 @@ export const createBooking = async (req: Request, res: Response) => {
         }, { transaction });
 
         await transaction.commit();
+     
 
         res.status(201).json({
             message: 'Booking created successfully',
@@ -123,3 +136,27 @@ export const getBookings = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Failed to fetch bookings' });
     }
 }
+
+
+export const cancelBooking = async (req: Request, res: Response) => {
+    const { seatId, userId } = req.body;
+    try {
+        const seat = await Seat.findOne({
+            where: {
+                seatNumber: seatId
+            }
+        });
+        if (!seat) {
+            return res.status(404).json({ error: 'Seat not found' });
+        }
+        seat.isAvailable = true;
+        await seat.save();
+        res.status(200).json({
+            message: 'Booking cancelled successfully',
+        });
+    } catch (error) {
+        console.error('Error cancelling booking:', error);
+        res.status(500).json({ error: 'Failed to cancel booking' });
+    }
+}   
+        

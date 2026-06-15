@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getUsers , createUser , bulkuploadUsers ,bulkUploadUsersFromXLS } from "../controllers/user.controller";
-import { createSeats, getSeats } from "../controllers/seats.controller";
+import { getSeats } from "../controllers/seats.controller";
 import multer from 'multer';
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -87,34 +87,6 @@ router.post('/users', createUser);
 */
 router.post('/users/bulk-upload', bulkuploadUsers);
 
-/**
- * openapi
- * @swagger
- * /api/seats:
- *   post:
- *     tags:
- *       - Seats
- *     summary: Create a new seat
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               seatNumber:
- *                 type: string
- *               price:
- *                 type: number
- *     responses:
- *       201:
- *         description: Seat created successfully
- *       400:
- *         description: Bad request
- *       500:
- *         description: Internal server error
- */
-router.post('/seats', createSeats);
 
 /**
  * openapi

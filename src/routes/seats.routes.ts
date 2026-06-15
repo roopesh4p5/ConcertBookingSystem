@@ -21,7 +21,7 @@ const router = Router();
  *             properties:
  *               seatNumber:
  *                 type: string
- *               price:
+ *               userId:
  *                 type: number
  *     responses:
  *       201:
@@ -34,7 +34,7 @@ const router = Router();
 router.post('/seats', createSeats);
 
 
-
+// add quesry filter for available seats
 /**
  * openapi
  * @swagger
@@ -43,6 +43,13 @@ router.post('/seats', createSeats);
  *     tags:
  *       - Seats
  *     summary: Get all seats
+ *     parameters:
+ *       - name: available
+ *         in: query
+ *         description: Filter seats by availability
+ *         required: false
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: A list of seats
